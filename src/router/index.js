@@ -1,13 +1,47 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/pages/index'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     routes: [{
-        path: '/',
-        name: 'Index',
-        component: Index
-    }]
+            path: '/',
+            component: () =>
+                import('@/pages/index.vue')
+
+        },
+        {
+            path: '/newbie',
+            component: () =>
+                import('@/pages/newbie.vue')
+
+        },
+        {
+            path: '/api',
+            component: () =>
+                import('@/pages/api.vue')
+
+        },
+        {
+            path: '/about',
+            component: () =>
+                import('@/pages/about.vue')
+
+        },
+        {
+            path: '/login',
+            component: () =>
+                import('@/pages/login.vue')
+
+        },
+        {
+            path: '/register',
+            component: () =>
+                import('@/pages/register.vue')
+
+        }
+    ]
 })
+
+
+export default router
