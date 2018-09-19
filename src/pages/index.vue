@@ -1,6 +1,7 @@
 <template>
 <div class="index">
     <c-header></c-header>
+    <c-main></c-main>
 </div>
 </template>
 <script>

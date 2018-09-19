@@ -2,7 +2,6 @@ import axios from 'axios'
 
 axios.defaults.baseURL = "https://cnodejs.org/api/v1";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.withCredentials = true;
 
 export default function request({ method = "GET", url, data = {} }) {
     return new Promise((resolve, reject) => {
@@ -11,6 +10,7 @@ export default function request({ method = "GET", url, data = {} }) {
             option.params = data;
         } else { option.data = data; }
         axios(option).then(res => {
+            console.log(res);
             if (res.status === 200) {
                 resolve(res.data);
             } else {
