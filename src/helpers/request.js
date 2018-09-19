@@ -10,7 +10,6 @@ export default function request({ method = "GET", url, data = {} }) {
             option.params = data;
         } else { option.data = data; }
         axios(option).then(res => {
-            console.log(res);
             if (res.status === 200) {
                 resolve(res.data);
             } else {
