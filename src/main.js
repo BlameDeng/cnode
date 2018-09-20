@@ -17,6 +17,9 @@ Vue.component('c-main', Cmain)
 import Cfooter from './components/footer'
 Vue.component('c-footer', Cfooter)
 
+import Csider from './components/sider'
+Vue.component('c-sider', Csider)
+
 new Vue({
     el: '#app',
     router,
