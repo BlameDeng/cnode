@@ -8,7 +8,6 @@ const router = new Router({
             path: '/',
             component: () =>
                 import('@/pages/index.vue')
-
         },
         {
             path: '/newbie',

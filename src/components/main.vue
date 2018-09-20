@@ -6,11 +6,11 @@
                 <div class="main-content">
                     <div class="main-content-navbar">
                         <ul>
-                            <li :class="{active:query.tab==='all'}" @click="query.tab='all'">全部</li>
-                            <li :class="{active:query.tab==='good'}" @click="query.tab='good'">精华</li>
-                            <li :class="{active:query.tab==='share'}" @click="query.tab='share'">分享</li>
-                            <li :class="{active:query.tab==='ask'}" @click="query.tab='ask'">问答</li>
-                            <li :class="{active:query.tab==='job'}" @click="query.tab='job'">招聘</li>
+                            <li :class="{active:query.tab==='all'}" @click="onClickTab" data-tab="all">全部</li>
+                            <li :class="{active:query.tab==='good'}" @click="onClickTab" data-tab="good">精华</li>
+                            <li :class="{active:query.tab==='share'}" @click="onClickTab" data-tab="share">分享</li>
+                            <li :class="{active:query.tab==='ask'}" @click="onClickTab" data-tab="ask">问答</li>
+                            <li :class="{active:query.tab==='job'}" @click="onClickTab" data-tab="job">招聘</li>
                         </ul>
                     </div>
                     <div v-for="topic in topics" :key="topic.id" class="topic">
@@ -75,14 +75,26 @@
             }
         },
         methods: {
-            ...mapActions(['getTopics', 'getTopicById'])
+            ...mapActions(['getTopics', 'getTopicById']),
+            onClickTab(e) {
+                this.query.tab = e.target.getAttribute('data-tab');
+            }
         },
-        created() {},
+        created() {
+            let link = this.$route.query;
+            if (link) {
+                this.getTopics({ ...{ link }, limit: 20 }).then(res => {
+                    this.topics = res.data;
+                    this.$router.push({ path: '/', query: { ...{ link } } });
+                }).catch(err => { console.log(err); })
+            }
+        },
         watch: {
             query: {
                 handler(val) {
                     this.getTopics({ page: val.page, tab: val.tab, limit: 20 }).then(res => {
                         this.topics = res.data;
+                        this.$router.push({ path: '/', query: { tab: val.tab, page: val.page } });
                     }).catch(err => { console.log(err); })
                 },
                 deep: true,
