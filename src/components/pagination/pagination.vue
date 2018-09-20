@@ -96,20 +96,32 @@
             currentPage(newValue, oldValue) {
                 let arrary = this.pageArrary;
                 let size = this.groupSize;
-                if (newValue <= this.total - size) {
-                    if ((newValue > oldValue && newValue >= arrary[size - 1]) || (newValue < oldValue && newValue <= arrary[1])) {
+                if (newValue <= this.total - size + 1 && newValue >= size) {
+                    if ((newValue > oldValue && newValue >= arrary[size - 1])) {
                         let newArrary = [];
                         for (let i = 0; i < size; i++) {
                             newArrary.push(newValue + i);
                         }
                         this.pageArrary = newArrary;
+                    } else if ((newValue < oldValue && newValue <= arrary[0])) {
+                        let newArrary = [];
+                        for (let i = 0; i < size; i++) {
+                            newArrary.unshift(newValue - i);
+                        }
+                        this.pageArrary = newArrary;
                     }
-                } else {
-                    let arrary = [];
+                } else if (newValue > this.total - size) {
+                    let newArrary = [];
                     for (let i = 0; i < size; i++) {
-                        arrary.unshift(this.total - i);
+                        newArrary.unshift(this.total - i);
                     }
-                    this.pageArrary = arrary;
+                    this.pageArrary = newArrary;
+                } else if (newValue < size) {
+                    let newArrary = [];
+                    for (let i = 0; i < size; i++) {
+                        newArrary.push(1 + i);
+                    }
+                    this.pageArrary = newArrary;
                 }
                 this.$emit('input', newValue);
             }

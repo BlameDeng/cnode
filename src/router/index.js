@@ -39,6 +39,12 @@ const router = new Router({
             component: () =>
                 import('@/pages/register.vue')
 
+        },
+        {
+            path: '/topic/:topicId',
+            component: () =>
+                import('@/pages/topic.vue')
+
         }
     ]
 })
