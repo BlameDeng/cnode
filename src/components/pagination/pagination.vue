@@ -4,7 +4,7 @@
             <x-icon name="prev"></x-icon>
         </li>
         <li v-if="pageArrary[0]>1" @click="onPrevGroup">...</li>
-        <li v-for="(n,index) in pageArrary" @click="onClickPage(n)" :key="n" :class="{active:n===currentPage}">{{n}}</li>
+        <li v-for="n in pageArrary" @click="onClickPage(n)" :key="n" :class="{active:n===currentPage}">{{n}}</li>
         <li v-if="pageArrary[groupSize-1]<total" @click="onNextGroup">...</li>
         <li @click="onNext">
             <x-icon name="next" class="icon"></x-icon>
@@ -38,7 +38,7 @@
             },
             total: {
                 type: Number,
-                default: 20,
+                default: 80,
                 validator(value) { return value > 2; }
             }
         },

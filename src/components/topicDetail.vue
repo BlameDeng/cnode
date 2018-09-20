@@ -15,7 +15,9 @@
                 </div>
             </x-col>
             <x-col span=0 :pc="{span:5,offset:0}">
-                <div class="sider-bar">sider-bar</div>
+                <div class="sider-bar">
+                    <c-sider></c-sider>
+                </div>
             </x-col>
             <x-col span=0 :pc="{span:2,offset:0}"></x-col>
         </x-row>
@@ -112,7 +114,6 @@
         }
         .sider-bar {
             display: block;
-            border: 1px solid red;
         }
     }
 </style>

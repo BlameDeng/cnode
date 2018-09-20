@@ -91,9 +91,10 @@
             }
         },
         created() {
-            this.getTopics({ page: 1 })
+            this.getTopics({ page: 1, limit: 40 })
                 .then(res => {
                     this.topics = res.data;
+                    console.log(res)
                     this.isLoading = false;
                 })
                 .catch(err => {
@@ -103,7 +104,7 @@
         watch: {
             query: {
                 handler(val) {
-                    this.getTopics({ page: val.page, tab: val.tab, limit: 20 })
+                    this.getTopics({ page: val.page, tab: val.tab, limit: 40 })
                         .then(res => {
                             this.topics = res.data;
                         })
@@ -305,7 +306,6 @@
             }
             .sider-bar {
                 display: block;
-                border: 1px solid red;
             }
         }
     }
