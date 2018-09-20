@@ -1,8 +1,8 @@
 <template>
     <div class="c-topic-detail">
         <x-row>
-            <x-col span=0 :pc="{span:3,offset:0}"></x-col>
-            <x-col span=24 :pc="{span:14,offset:0}">
+            <x-col span=0 :pc="{span:2,offset:0}"></x-col>
+            <x-col span=24 :pc="{span:15,offset:0}">
                 <div class="topic-inner">
                     <div class="topic-title">{{topic.title}}</div>
                     <div class="topic-info">
@@ -14,10 +14,10 @@
                     <div class="markdown-body" v-html="topic.content"></div>
                 </div>
             </x-col>
-            <x-col span=0 :pc="{span:4,offset:0}">
+            <x-col span=0 :pc="{span:5,offset:0}">
                 <div class="sider-bar">sider-bar</div>
             </x-col>
-            <x-col span=0 :pc="{span:3,offset:0}"></x-col>
+            <x-col span=0 :pc="{span:2,offset:0}"></x-col>
         </x-row>
     </div>
 </template>
@@ -45,6 +45,7 @@
                 } else if (val === "good") {
                     return "精华";
                 }
+                return '分享';
             }
         },
         methods: {
@@ -67,19 +68,19 @@
     }
     .topic-inner {
         margin: 0 10px;
-        padding-left: 10px;
         padding-top: 10px;
         background: #fff;
         border-radius: 4px;
     }
     .topic-inner>.topic-title {
+        padding-left: 10px;
         font-size: 26px;
         font-weight: bold;
     }
     .topic-inner>.topic-info {
         font-size: 12px;
         color: #999;
-        padding: 10px 0;
+        padding: 10px 0 10px 10px;
         border-bottom: 1px solid #ddd;
         margin-bottom: 10px;
     }
@@ -100,6 +101,7 @@
     }
     .markdown-body {
         margin-left: 10px;
+        margin-right: 10px;
     }
     .sider-bar {
         display: none;

@@ -1,23 +1,25 @@
 <template>
     <div class="c-main">
         <x-row>
-            <x-col span=0 :pc="{span:3,offset:0}"></x-col>
-            <x-col span=24 :pc="{span:14,offset:0}">
+            <x-col span=0 :pc="{span:2,offset:0}"></x-col>
+            <x-col span=24 :pc="{span:15,offset:0}">
                 <div class="main-content">
                     <div class="main-content-navbar">
                         <ul>
-                            <li class="active">全部</li>
-                            <li>精华</li>
-                            <li>分享</li>
-                            <li>问答</li>
-                            <li>招聘</li>
+                            <li :class="{active:query.tab==='all'}" @click="query.tab='all'">全部</li>
+                            <li :class="{active:query.tab==='good'}" @click="query.tab='good'">精华</li>
+                            <li :class="{active:query.tab==='share'}" @click="query.tab='share'">分享</li>
+                            <li :class="{active:query.tab==='ask'}" @click="query.tab='ask'">问答</li>
+                            <li :class="{active:query.tab==='job'}" @click="query.tab='job'">招聘</li>
                         </ul>
                     </div>
                     <div v-for="topic in topics" :key="topic.id" class="topic">
                         <img :src="topic.author.avatar_url" :title="topic.author.loginname">
                         <div class="topic-info">
                             <div class="topic-info-inner">
-                                <p class="topic-info-inner-tab">置顶</p>
+                                <p class="topic-info-inner-tab" v-if="topic.top">置顶</p>
+                                <p class="topic-info-inner-tab" v-if="topic.good">精华</p>
+                                <p class="topic-info-inner-tab-default" v-if="!topic.top&&!topic.good">{{topic.tab|tab}}</p>
                                 <p class="topic-info-inner-title" :title="topic.title">
                                     <router-link :to="`./topic/${topic.id}`">{{topic.title}}</router-link>
                                 </p>
@@ -25,18 +27,18 @@
                             <p class="topic-info-count"><span>{{topic.reply_count}}/</span><span>{{topic.visit_count}}</span></p>
                         </div>
                         <p class="topic-reply">
-                            <router-link :to="`./topic/${topic.id}`"><span>最新回复：</span>4小时前</router-link>
+                            <router-link :to="`./topic/${topic.id}`"><span>最新回复：</span>{{$formatDate(topic.last_reply_at).des}}</router-link>
                         </p>
                     </div>
                     <div class="pagination-wrapper">
-                        <x-pagination v-model="currentPage"></x-pagination>
+                        <x-pagination v-model="query.page"></x-pagination>
                     </div>
                 </div>
             </x-col>
-            <x-col span=0 :pc="{span:4,offset:0}">
+            <x-col span=0 :pc="{span:5,offset:0}">
                 <div class="sider-bar">sider-bar</div>
             </x-col>
-            <x-col span=0 :pc="{span:3,offset:0}"></x-col>
+            <x-col span=0 :pc="{span:2,offset:0}"></x-col>
         </x-row>
     </div>
 </template>
@@ -55,22 +57,36 @@
         data() {
             return {
                 topics: [],
-                currentPage: 1,
+                query: { tab: 'all', page: 1 }
+            }
+        },
+        filters: {
+            tab(val) {
+                if (val === "share") {
+                    return '分享';
+                } else if (val === "ask") {
+                    return "问答";
+                } else if (val === "job") {
+                    return "招聘";
+                } else if (val === "good") {
+                    return "精华";
+                }
+                return '分享';
             }
         },
         methods: {
             ...mapActions(['getTopics', 'getTopicById'])
         },
-        created() {
-            this.getTopics({ page: this.currentPage, limit: 20 }).then(res => {
-                this.topics = res.data;
-            }).catch(err => { console.log(err); })
-        },
+        created() {},
         watch: {
-            currentPage(newValue) {
-                this.getTopics({ page: newValue, limit: 20 }).then(res => {
-                    this.topics = res.data;
-                }).catch(err => { console.log(err); })
+            query: {
+                handler(val) {
+                    this.getTopics({ page: val.page, tab: val.tab, limit: 20 }).then(res => {
+                        this.topics = res.data;
+                    }).catch(err => { console.log(err); })
+                },
+                deep: true,
+                immediate: true
             }
         }
     }
@@ -146,6 +162,15 @@
                             font-size: 12px;
                             background: $nodegreen;
                             color: #fff;
+                            padding: 2px 5px;
+                            border-radius: 3px;
+                            margin: 0 5px 0 0;
+                            flex-shrink: 0;
+                        }
+                        &-tab-default {
+                            font-size: 12px;
+                            background: #ddd;
+                            color: #888;
                             padding: 2px 5px;
                             border-radius: 3px;
                             margin: 0 5px 0 0;
