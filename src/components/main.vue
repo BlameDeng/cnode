@@ -25,7 +25,7 @@
                             <p class="topic-info-count"><span>{{topic.reply_count}}/</span><span>{{topic.visit_count}}</span></p>
                         </div>
                         <p class="topic-reply">
-                            <router-link to=""><span>最新回复：</span>4小时前</router-link>
+                            <router-link :to="`./topic/${topic.id}`"><span>最新回复：</span>4小时前</router-link>
                         </p>
                     </div>
                     <div class="pagination-wrapper">
@@ -64,7 +64,6 @@
         created() {
             this.getTopics({ page: this.currentPage, limit: 20 }).then(res => {
                 this.topics = res.data;
-                console.log(this.topics[0])
             }).catch(err => { console.log(err); })
         },
         watch: {

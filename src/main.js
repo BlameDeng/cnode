@@ -11,6 +11,9 @@ Vue.component('c-header', Cheader)
 import Cmain from './components/main'
 Vue.component('c-main', Cmain)
 
+import Cfooter from './components/footer'
+Vue.component('c-footer', Cfooter)
+
 new Vue({
     el: '#app',
     router,

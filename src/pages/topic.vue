@@ -1,12 +1,15 @@
 <template>
-<div class="about">
-    <c-header></c-header>
-    topic
-</div>
+    <div class="topic">
+        <c-header></c-header>
+        <c-detail></c-detail>
+        <c-footer></c-footer>
+    </div>
 </template>
 <script>
+    import Detail from '../components/topicDetail'
     export default {
-
+        name: 'cTopic',
+        components: { 'c-detail': Detail }
     }
 </script>
 <style lang="scss" scoped>
