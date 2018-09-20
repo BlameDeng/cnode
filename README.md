@@ -1,5 +1,7 @@
 # cnode
 
+## 尚未完成
+
 > A Vue.js project
 
 ## Build Setup
